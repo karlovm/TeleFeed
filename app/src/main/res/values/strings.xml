@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TeleFeed</string>
+    <string name="next">Next</string>
+    <string name="phone_number">Phone number</string>
+    <string name="welcome_subtitle">Explore news</string>
+    <string name="welcome_title">Enter TeleFeed</string>
+    <string name="code_title">Enter code</string>
+    <string name="code_subtitle">Code has been sent to your Telegram Account.</string>
+    <string name="code_hint">Code</string>
+    <string name="code_action">Explore news</string>
+    <string name="error">An error occured. </string>
+    <string name="media_counter">%s from %p</string>
+    <string name="today">today at </string>
+    <string name="yesterday">yesterday, </string>
+    <string name="comments">Comments</string>
+    <string name="comments_unavailable">Unfortunately, comments are unavailable</string>
+</resources>

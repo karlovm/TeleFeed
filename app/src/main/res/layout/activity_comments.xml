@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:context=".activities.main.CommentsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="?actionBarItemBackground"
+            android:layout_marginStart="20dp"
+        android:onClick="back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/comments"
+            android:fontFamily="@font/golos_medium"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorText"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:id="@+id/error"
+        android:animateLayoutChanges="true"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_sad"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/comments_unavailable"
+            android:fontFamily="@font/golos_medium"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_margin="10dp"
+          />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:stackFromEnd="true"
+
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    />
+</LinearLayout>

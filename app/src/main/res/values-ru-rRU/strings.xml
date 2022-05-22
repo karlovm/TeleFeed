@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TeleFeed</string>
+    <string name="next">Далее</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="welcome_subtitle">Получите доступ к структурированным новостям в пару нажатий.</string>
+    <string name="welcome_title">Войти в TeleFeed</string>
+    <string name="code_title">Введите код</string>
+    <string name="code_subtitle">Код был отправлен в Telegram аккаунт, зарегистрированный на указанный номер.</string>
+    <string name="code_hint">Код</string>
+    <string name="code_action">Начать</string>
+    <string name="error">Произошла ошибка.</string>
+    <string name="media_counter">%s из %p</string>
+    <string name="today">сегодня в </string>
+    <string name="yesterday">вчера в </string>
+    <string name="comments">Комментарии</string>
+    <string name="comments_unavailable">К сожалению, просмотр комментариев недоступен.</string>
+</resources>
