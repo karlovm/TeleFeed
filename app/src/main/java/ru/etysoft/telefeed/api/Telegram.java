@@ -7,6 +7,9 @@ import org.drinkless.td.libcore.telegram.TdApi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import ru.etysoft.telefeed.CacheUtils;
 
 public class Telegram {
     private static Client client;
@@ -31,24 +34,29 @@ public class Telegram {
         updateCallbacks.remove(updateCallback);
     }
 
+    public static void reset()
+    {
+        client.close();
+
+        client = null;
+    }
+
     public static void initialize(Context context) {
         if (client == null) {
             Telegram.context = context;
+
+            System.out.println("Initializing Telegram Client...");
 
             try {
                 client = Client.create(new Client.ResultHandler() {
                     @Override
                     public void onResult(TdApi.Object object) {
 
-                        try
-                        {
-                            for(UpdateCallback updateCallback : updateCallbacks)
-                            {
+                        try {
+                            for (UpdateCallback updateCallback : updateCallbacks) {
                                 updateCallback.onUpdate(object);
                             }
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -58,7 +66,19 @@ public class Telegram {
                                 break;
                         }
                     }
-                }, null, null);
+                }, new Client.ExceptionHandler() {
+                    @Override
+                    public void onException(Throwable e) {
+                        e.printStackTrace();
+                    }
+                }, new Client.ExceptionHandler() {
+                    @Override
+                    public void onException(Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                System.out.println("jopa...");
                 Client.setLogVerbosityLevel(0);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -82,6 +102,25 @@ public class Telegram {
 
     private static void onAuthorizationStateUpdated(TdApi.AuthorizationState authorizationState) {
 
+
+        int apiId = 11796157;
+        String apiHash = "17774933ac44aa8fa44a859cced004a4";
+
+        if(CacheUtils.getInstance().hasKey("apiId", context))
+        {
+            try {
+                apiId = Integer.parseInt(CacheUtils.getInstance().getString("apiId", context));
+                apiHash = CacheUtils.getInstance().getString("apiHash", context);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+
+        System.out.println("Api id " + apiHash);
+
         switch (authorizationState.getConstructor()) {
 
             case TdApi.AuthorizationStateWaitTdlibParameters.CONSTRUCTOR:
@@ -91,8 +130,8 @@ public class Telegram {
                 parameters.filesDirectory = context.getExternalFilesDir(null).getAbsolutePath() + "/";
                 parameters.useMessageDatabase = false;
                 parameters.useSecretChats = false;
-                parameters.apiId = 6;
-                parameters.apiHash = "eb06d4abfb49dc3eeb1aeb98ae0f581e";
+                parameters.apiId = apiId;
+                parameters.apiHash = apiHash;
                 parameters.systemLanguageCode = "ru";
                 parameters.deviceModel = "Android";
                 parameters.useFileDatabase = true;
@@ -113,7 +152,9 @@ public class Telegram {
                 break;
             }
             case TdApi.AuthorizationStateWaitPassword.CONSTRUCTOR: {
-
+                for (AuthorizationStateCallback authorizationStateCallback : authorizationStateCallbackList) {
+                    authorizationStateCallback.onWaitPassword();
+                }
                 break;
             }
             case TdApi.AuthorizationStateWaitEncryptionKey.CONSTRUCTOR:
@@ -177,6 +218,8 @@ public class Telegram {
         void onWaitCode();
 
         void onWaitRegistration();
+
+        void onWaitPassword();
 
         void onAuthorizationReady();
     }

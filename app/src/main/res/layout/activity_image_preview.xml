@@ -4,16 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundTransparent"
+    android:onClick="onExitPressed"
     tools:context=".activities.main.ImagePreview">
 
-    <ImageView
-        android:id="@+id/previewImage"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/imagesPager"
+        android:layout_marginBottom="-10dp"
+        android:background="@color/colorHintText"
+
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        tools:srcCompat="@tools:sample/backgrounds/scenic"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

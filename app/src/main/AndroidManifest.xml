@@ -14,22 +14,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TeleFeed">
         <activity
-            android:name=".activities.main.ImagePreview"
+            android:name=".SearchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppSlideTheme"/>
+        <activity
+            android:name=".Settings"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppSlideTheme" />
+        <activity
+            android:name=".CustomAPI"
             android:exported="false" />
+        <activity
+            android:name=".activities.main.ImagePreview"
+            android:exported="false"
+            android:theme="@style/AppSlideTheme" />
         <activity
             android:name=".activities.main.CommentsActivity"
             android:exported="false"
             android:theme="@style/AppSlideTheme" />
         <activity
             android:name=".activities.auth.CodeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppSlideTheme" />
         <activity
             android:name=".activities.auth.WelcomeActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

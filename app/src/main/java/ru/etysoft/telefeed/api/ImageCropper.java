@@ -8,7 +8,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 
 public class ImageCropper {
-    public static Bitmap getCroppedBitmap(Bitmap bitmap) {
+    public static Bitmap roundCrop(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);

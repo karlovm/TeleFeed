@@ -21,7 +21,8 @@
         android:onClick="back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_arrow" />
+            app:srcCompat="@drawable/ic_arrow"
+            app:tint="@color/foregroundIcons" />
 
         <TextView
             android:layout_width="match_parent"
@@ -42,9 +43,10 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_sad"/>
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
+            android:src="@drawable/hz_512"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -53,13 +55,15 @@
             android:fontFamily="@font/golos_medium"
             android:textSize="20sp"
             android:gravity="center"
-            android:layout_margin="10dp"
+            android:textColor="@color/foregroundIcons"
+            android:layout_margin="20dp"
           />
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress_circular"
         android:layout_width="match_parent"
+
         android:layout_height="30dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

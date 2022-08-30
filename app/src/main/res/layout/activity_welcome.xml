@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/colorBackground"
     tools:context=".activities.auth.WelcomeActivity">
 
     <ImageView
@@ -24,6 +26,7 @@
         android:text="@string/welcome_title"
         android:fontFamily="@font/golos_medium"
         android:textSize="28sp"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -38,29 +41,62 @@
         android:gravity="center"
         android:paddingHorizontal="50dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/numberEditText"
+        app:layout_constraintBottom_toTopOf="@+id/linear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/numberEditText"
+    <LinearLayout
+
+        android:id="@+id/linear"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_width="0dp"
-        android:layout_height="40dp"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp"
+        android:animateLayoutChanges="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/edittext"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/phone_number"
-        android:fontFamily="@font/golos_medium"
-
-        android:inputType="text|phone"
-        android:paddingHorizontal="10dp"
-        android:textColorHint="@color/colorHintText"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/numberEditText"
+
+            android:background="@drawable/edittext"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/phone_number"
+            android:fontFamily="@font/golos_medium"
+
+
+            android:inputType="text|phone"
+            android:paddingHorizontal="10dp"
+            android:textColorHint="@color/colorHintText"
+           />
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:visibility="gone"
+
+
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/password"
+            android:fontFamily="@font/golos_medium"
+
+            android:inputType="textPassword"
+            android:paddingHorizontal="10dp"
+            android:textColorHint="@color/colorHintText"
+           />
+    </LinearLayout>
+
+
+
 
     <Button
         android:id="@+id/button"
@@ -70,13 +106,14 @@
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp"
 
-        android:onClick="onNextButtonClick"
         android:background="@drawable/button"
         android:backgroundTint="@color/colorAccent"
+        android:fontFamily="@font/golos_medium"
         android:letterSpacing="0"
+        android:onClick="onNextButtonClick"
         android:text="@string/next"
         android:textAllCaps="false"
-        android:fontFamily="@font/golos_medium"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +121,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.7" />
 
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/helpView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/golos_medium"
+        android:gravity="center"
+        android:paddingHorizontal="50dp"
+        android:text="@string/custom_api"
+        android:textSize="14sp"
+        android:textColor="@color/colorHintText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

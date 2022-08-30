@@ -15,4 +15,33 @@
     <string name="yesterday">вчера в </string>
     <string name="comments">Комментарии</string>
     <string name="comments_unavailable">К сожалению, просмотр комментариев недоступен.</string>
+    <string name="search_hint">Поиск новостей</string>
+    <string name="share_post">Поделиться новостью</string>
+    <string name="share_post_message">Подпись</string>
+    <string name="loading_text">Обрабатываем...</string>
+    <string name="loading_subtitle">Ваши новости скоро будут готовы.</string>
+    <string name="password">Пароль</string>
+    <string name="custom_api"><u>Проблемы? Используйте собственный ключ API</u></string>
+    <string name="api_key_guide" >Вы можете применить свой собственный ключ для TeleFeed \n
+        1. Перейдите по my.telegram.org  \n
+        2. Войдите в систему \n
+        3. Перейдите на страницу \'App\'\n
+        4. Скопируйте App Id и App Hash \n
+        5. Наслаждайтесь собственным API без третьих лиц!\n\n
+        Внимание: приложение будет перезагружено</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
+    <string name="read_more">Читать полностью</string>
+    <string name="settings">Настройки</string>
+    <string name="settings_custom_api">Использовать свой API ключ</string>
+    <string name="settings_logout">Выйти из аккаунта</string>
+    <string name="settings_select_channels">Игнорировать источники</string>
+    <string name="ignore_title">Игнорировать каналы</string>
+    <string name="ignore_count">Выбрано %s каналов</string>
+    <string name="ignore_apply">Изменения будут применены скоро</string>
+    <string name="settings_cache_size">Кэш (%s МБ, автоматическая очистка)</string>
+    <string name="search_results">Результаты поиска</string>
+    <string name="search_not_found">Записей не найдено</string>
+    <string name="switch_dynamic_images">Динамические размеры изображений</string>
+    <string name="dynamic_on">Использование этого режима может повлиять на плавность скролла</string>
 </resources>

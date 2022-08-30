@@ -11,6 +11,11 @@
     <color name="colorActions">#F5F5F5</color>
     <color name="colorActionsRipple">#D5D5D5</color>
     <color name="colorCover">#B9000000</color>
+    <color name="foregroundIcons">#292929</color>
+    <color name="backgroundIcons">#B0B0B0</color>
+    <color name="backgroundText">#686868</color>
+    <color name="backgroundTransparent">#C3090909</color>
+    <color name="colorRed">#C3FF6C47</color>
 
     <color name="black">#FF000000</color>
     <color name="colorText">#292929</color>

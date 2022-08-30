@@ -56,7 +56,7 @@ public class CodeActivity extends AppCompatActivity implements Telegram.Authoriz
 
     @Override
     public void onWaitPhoneNumber() {
-
+        finish();
     }
 
     @Override
@@ -66,7 +66,12 @@ public class CodeActivity extends AppCompatActivity implements Telegram.Authoriz
 
     @Override
     public void onWaitRegistration() {
+        finish();
+    }
 
+    @Override
+    public void onWaitPassword() {
+        finish();
     }
 
     @Override

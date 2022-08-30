@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:context=".activities.main.CommentsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="?actionBarItemBackground"
+            android:layout_marginStart="20dp"
+            android:onClick="back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow"
+            app:tint="@color/foregroundIcons" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:fontFamily="@font/golos_medium"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorText"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Switch
+                android:id="@+id/switch_dynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/golos_medium"
+                android:paddingHorizontal="18dp"
+                android:background="?selectableItemBackground"
+                android:textSize="16sp"
+                android:textColor="@color/colorText"
+                android:text="@string/switch_dynamic_images" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="10dp"
+                android:onClick="openIgnore"
+                android:fontFamily="@font/golos_medium"
+                android:textSize="16sp"
+                android:textColor="@color/colorText"
+                android:text="@string/settings_select_channels"
+                android:background="?selectableItemBackground"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="10dp"
+                android:onClick="openApiActivity"
+                android:fontFamily="@font/golos_medium"
+                android:textSize="16sp"
+                android:textColor="@color/colorText"
+                android:text="@string/settings_custom_api"
+                android:background="?selectableItemBackground"/>
+
+            <TextView
+                android:id="@+id/size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="10dp"
+                android:onClick="clearCache"
+                android:fontFamily="@font/golos_medium"
+                android:textSize="16sp"
+                android:textColor="@color/colorText"
+                android:text="@string/settings_cache_size"
+                android:background="?selectableItemBackground"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="10dp"
+                android:onClick="logout"
+                android:fontFamily="@font/golos_medium"
+                android:textSize="16sp"
+                android:textColor="@color/colorRed"
+                android:text="@string/settings_logout"
+                android:background="?selectableItemBackground"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

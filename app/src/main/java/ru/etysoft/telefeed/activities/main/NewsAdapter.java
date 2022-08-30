@@ -1,17 +1,24 @@
 package ru.etysoft.telefeed.activities.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.format.DateUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -21,8 +28,13 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 
+import ru.etysoft.telefeed.CacheUtils;
 import ru.etysoft.telefeed.R;
+import ru.etysoft.telefeed.SearchActivity;
+import ru.etysoft.telefeed.api.MediaInfo;
 import ru.etysoft.telefeed.api.NewsGetter;
+import ru.etysoft.telefeed.bottomsheet.ShareBottomSheet;
+import ru.etysoft.telefeed.views.FeedVideoPlayer;
 import ru.etysoft.telefeed.views.ImagesPager;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
@@ -30,14 +42,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private List<Article> articles;
     private Activity activity;
 
+
+
     public NewsAdapter(Activity context, List<Article> data) {
         this.mInflater = LayoutInflater.from(context);
         this.articles = data;
         this.activity = context;
+
     }
 
+
+
+
     public static class Article implements Cloneable {
-        private List<Bitmap> imagesList;
+        private List<MediaInfo> mediaList;
         private Bitmap avatar;
         private String text;
         private int views;
@@ -45,15 +63,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         private String channelName;
         private int date;
         private String commentsCount;
+
+
         private long messageId;
         private TdApi.Message message;
+
         @Override
         public Object clone() throws CloneNotSupportedException {
             return super.clone();    // return shallow copy
         }
-        public Article(List<Bitmap> imagesList, String text, String channelName, int date, String commentsCount, TdApi.Message message
+        public Article(List<MediaInfo> mediaList, String text, String channelName, int date, String commentsCount, TdApi.Message message
         , int views, int comments) {
-            this.imagesList = imagesList;
+            this.mediaList = mediaList;
             this.text = text;
             this.channelName = channelName;
             this.date = date;
@@ -63,7 +84,33 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             this.comments = comments;
         }
 
+        public int getViews() {
+            return views;
+        }
 
+        public void setViews(int views) {
+            this.views = views;
+        }
+
+        public int getComments() {
+            return comments;
+        }
+
+        public void setComments(int comments) {
+            this.comments = comments;
+        }
+
+        public void setChannelName(String channelName) {
+            this.channelName = channelName;
+        }
+
+        public void setDate(int date) {
+            this.date = date;
+        }
+
+        public void setCommentsCount(String commentsCount) {
+            this.commentsCount = commentsCount;
+        }
 
         public TdApi.Message getMessage() {
             return message;
@@ -93,12 +140,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             this.text = text;
         }
 
-        public void setImagesList(List<Bitmap> imagesList) {
-            this.imagesList = imagesList;
+        public void setMediaList(List<MediaInfo> mediaList) {
+            this.mediaList = mediaList;
         }
 
-        public List<Bitmap> getImagesList() {
-            return imagesList;
+        public List<MediaInfo> getMediaList() {
+            return mediaList;
         }
 
         public String getText() {
@@ -126,6 +173,36 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         View view = mInflater.inflate(R.layout.article, parent, false);
         return new ViewHolder(view);
     }
+    public static float convertPixelsToDp(float px, Context context){
+        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+
+        FeedVideoPlayer.resetAllFocus();
+
+
+
+    }
+
+
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        holder.imagesPager.setImages(holder.mediaInfos);
+
+
+
+
+    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -134,7 +211,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
        // holder.viewPager2.setVisibility(View.GONE);
         //holder.imagesPager.resetPivot();
 
-        if(article.getImagesList().size() == 0)
+        if(!CacheUtils.getInstance().getBoolean("dynamicArt", activity.getApplicationContext()))
+        {
+            holder.viewPager2.getLayoutParams().height = (int) convertDpToPixel(300, activity);
+        }
+
+        if(article.getMediaList().size() == 0)
         {
             holder.viewPager2.setVisibility(View.GONE);
         }
@@ -150,6 +232,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         else
         {
             holder.textView.setVisibility(View.VISIBLE);
+            holder.textView.setTextIsSelectable(false);
+            holder.textView.measure(-1, -1);
+            holder.textView.setTextIsSelectable(true);
         }
 
         holder.channelView.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +243,25 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 try
                 {
 
-                    holder.textView.setText(article.getMessage().toString());
+                    if(MainActivity.isDebug) {
+                        holder.textView.setText(article.getMessage().toString());
+                    }
+                    SearchActivity.query = "channel:" + article.getMessage().chatId;
+
+
+                    if(!(activity instanceof SearchActivity))
+                    {
+                        SearchActivity.articles = articles;
+                        Intent intent = new Intent(activity, SearchActivity.class);
+                        activity.startActivity(intent);
+                    }
+                    else
+                    {
+                        SearchActivity searchActivity = (SearchActivity) activity;
+                        searchActivity.processSearch();
+
+                    }
+
                 }
                 catch (Exception e)
                 {
@@ -177,16 +280,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             holder.viewsCount.setText(String.valueOf(article.views));
         }
 
-        List<Bitmap> images = articles.get(position).getImagesList();
+
+
+        List<MediaInfo> images = articles.get(position).getMediaList();
         Collections.reverse(images);
+        holder.mediaInfos = images;
         holder.imagesPager.setImages(images);
 
-        if(article.getImagesList().size() > 1)
+        if(article.getMediaList().size() > 1)
         {
+            holder.viewPager2.setOffscreenPageLimit(5);
             holder.mediaCount.setVisibility(View.VISIBLE);
             holder.mediaCount.setText(mInflater.getContext().getResources().getString(R.string.media_counter)
             .replace("%s", String.valueOf(holder.viewPager2.getCurrentItem() + 1))
-            .replace("%p", String.valueOf(article.getImagesList().size())));
+            .replace("%p", String.valueOf(article.getMediaList().size())));
         }
         else
         {
@@ -219,7 +326,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 super.onPageSelected(position);
                 holder.mediaCount.setText(mInflater.getContext().getResources().getString(R.string.media_counter)
                         .replace("%s", String.valueOf(holder.viewPager2.getCurrentItem() + 1))
-                                .replace("%p", String.valueOf(article.getImagesList().size())));
+                                .replace("%p", String.valueOf(article.getMediaList().size())));
             }
         });
 
@@ -243,11 +350,56 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 activity.startActivity(intent);
             }
         });
+
+
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ShareBottomSheet.postId = article.getMessage().id;
+                ShareBottomSheet.channelId = article.getMessage().chatId;
+                ShareBottomSheet bottomSheet = new ShareBottomSheet();
+
+                bottomSheet.show(((FragmentActivity)activity).getSupportFragmentManager(), "news");
+            }
+        });
         holder.channelView.setText(article.getChannelName());
-        holder.textView.setText(article.getText());
+
+        String text = article.getText();
+
+        if(text.length() > 200)
+        {
+            text = text.substring(0, 190) + "...";
+            holder.readMore.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.readMore.setVisibility(View.GONE);
+        }
+
+        holder.readMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.textView.setText(article.getText());
+                holder.readMore.setVisibility(View.GONE);
+            }
+        });
+
+        holder.textView.setText(text);
         holder.viewPager2.setCurrentItem(0);
         holder.avatar.setImageBitmap(NewsGetter.supergroupsAvatars.get(
                 article.getMessage().chatId));
+        holder.rootView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN ||
+                        motionEvent.getAction() == MotionEvent.ACTION_HOVER_ENTER )
+                {
+                    //holder.focus();
+                }
+                return true;
+            }
+        });
 
     }
 
@@ -268,9 +420,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         TextView dateView;
         ImageView avatar;
         LinearLayout commentsBox;
+        LinearLayout share;
+        TextView readMore;
+        List<MediaInfo> mediaInfos;
+        View rootView;
 
         ViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
             viewPager2 = itemView.findViewById(R.id.imagesPager);
             channelView = itemView.findViewById(R.id.channelNameView);
             textView = itemView.findViewById(R.id.textView);
@@ -280,7 +437,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             commentsBox = itemView.findViewById(R.id.commentsBox);
             mediaCount = itemView.findViewById(R.id.mediaCount);
             dateView = itemView.findViewById(R.id.dateView);
+            readMore = itemView.findViewById(R.id.readMore);
             commentsCount = itemView.findViewById(R.id.commentsCountView);
+            share = itemView.findViewById(R.id.share);
             imagesPager = new ImagesPager(viewPager2, activity);
             itemView.setOnClickListener(this);
         }

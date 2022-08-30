@@ -17,6 +17,7 @@
         android:text="@string/code_title"
         android:fontFamily="@font/golos_medium"
         android:textSize="28sp"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -63,8 +64,10 @@
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp"
 
+
+
         android:background="@drawable/button"
-        android:backgroundTint="@color/colorAccent"
+
         android:fontFamily="@font/golos_medium"
         android:letterSpacing="0"
         android:text="@string/code_action"
@@ -81,6 +84,7 @@
         android:id="@+id/backArrow"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        app:tint="@color/foregroundIcons"
         android:background="?actionBarItemBackground"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"

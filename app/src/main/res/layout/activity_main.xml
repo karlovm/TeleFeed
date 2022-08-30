@@ -16,20 +16,21 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:clipChildren="true"
             app:layout_scrollFlags="snapMargins"
             app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
 
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_marginTop="5dp"
+                    android:layout_height="40dp">
 
 
                     <ImageView
@@ -44,24 +45,53 @@
                         android:paddingRight="10dp"
                         android:layout_height="match_parent">
 
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:padding="2dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_settings"
+                            app:tint="@color/colorHintText"
+                            android:onClick="openSettings"
+                            android:background="?android:actionBarItemBackground"/>
+
                         <Button
                             android:layout_width="50dp"
                             android:layout_gravity="right"
                             android:onClick="apply"
                             android:gravity="right"
+                            android:visibility="gone"
                             android:layout_height="match_parent" />
 
                         <TextView
                             android:id="@+id/textView3"
                             android:layout_width="100dp"
+                            android:visibility="gone"
                             android:textColor="@color/colorCover"
                             android:layout_height="wrap_content"
                             android:text="TextView" />
                     </LinearLayout>
 
+
+
                 </LinearLayout>
 
-
+                <EditText
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/edittext"
+                    android:layout_marginRight="15dp"
+                    android:fontFamily="@font/golos_medium"
+                    android:paddingHorizontal="10dp"
+                    android:imeOptions="actionSearch"
+                    android:maxLines="1"
+                    android:textColorHint="@color/colorHintText"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorText"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/search_hint"
+                    android:layout_marginVertical="5dp"
+                    android:layout_height="35dp"/>
 
 
             </LinearLayout>
@@ -75,6 +105,8 @@
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+
         android:divider="@color/colorBackground"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -83,15 +115,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="15dp"
+            android:background="@color/colorBackground"
+            app:cardBackgroundColor="@color/colorTransparent"
             android:elevation="0dp"
             app:cardElevation="0dp">
+
+            <LinearLayout
+                android:id="@+id/loadingView"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <VideoView
+                    android:id="@+id/videoview"
+                    android:layout_width="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="200dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/golos_medium"
+                    android:textSize="24sp"
+                    android:paddingHorizontal="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading_text"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/golos_regular"
+                    android:textSize="18sp"
+                    android:paddingHorizontal="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading_subtitle"/>
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content"
-
-
+                android:descendantFocusability="beforeDescendants"
+                android:nestedScrollingEnabled="true"
                 android:divider="@color/colorBackground"
                 android:dividerHeight="12dp"
                 android:footerDividersEnabled="false"

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-20dp"
+        android:background="@color/colorBackground"
+        app:cardBackgroundColor="@color/colorBackground"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:tint="@color/backgroundIcons"
+                    android:src="@drawable/ic_repost"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/share_post"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="@font/golos_medium"
+                    android:textColor="@color/backgroundText"/>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/colorBackground"
+                app:cardElevation="0dp"
+                android:layout_height="400dp">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:nestedScrollingEnabled="true"
+                android:layout_height="400dp">
+
+                <ru.etysoft.telefeed.views.AutoGridLayout
+                    android:id="@+id/grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:columnCount="4"
+                    android:nestedScrollingEnabled="true"
+                    android:numColumns="auto_fit"
+
+                    app:columnWidth="70dp" />
+            </ScrollView>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+
+                android:orientation="horizontal"
+                android:layout_marginTop="-20dp"
+                android:layout_height="70dp">
+                <EditText
+                    android:id="@+id/messageInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom"
+                    android:paddingLeft="20dp"
+
+                    android:paddingRight="100dp"
+                    android:background="@drawable/edittext"
+
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/share_post_message"
+                    android:fontFamily="@font/golos_medium"
+
+                    android:inputType="textCapSentences"
+                    android:textColorHint="@color/colorHintText"
+                    android:textColor="@color/colorText"
+                    app:layout_constraintBottom_toTopOf="@+id/button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <ImageView
+                    android:id="@+id/sendButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="-70dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_send"
+                    android:background="@drawable/round_button"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
